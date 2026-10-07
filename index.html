@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube → Résumé → Page web · Le workflow</title>
+<meta name="description" content="Les 7 étapes du workflow : de l'URL YouTube à une page web à partager, avec les preuves et les garde-fous.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="D'une vidéo YouTube à une page web à partager">
+<meta property="og:description" content="Les 7 étapes du workflow — un trajet, une preuve par étape.">
+<meta property="og:image" content="https://jbijjer.github.io/workflow-youtube-page-2026-10-07/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="D'une vidéo YouTube à une page web à partager">
+<meta name="twitter:description" content="Les 7 étapes du workflow — un trajet, une preuve par étape.">
+<meta name="twitter:image" content="https://jbijjer.github.io/workflow-youtube-page-2026-10-07/og.png">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#533afd; --purple-hover:#4434d4; --purple-light:#b9b9f9; --purple-soft:#eeecff;
+    --navy:#061b31; --label:#273951; --body:#64748d;
+    --ruby:#ea2261; --magenta:#f96bee; --brand-dark:#1c1e54;
+    --border:#e5edf5; --bg:#ffffff; --bg-soft:#f6f9fc;
+    --green:#15be53; --green-text:#108c3d;
+    --shadow: rgba(50,50,93,.25) 0 30px 45px -30px, rgba(0,0,0,.1) 0 18px 36px -18px;
+    --shadow-amb: rgba(23,23,23,.08) 0 15px 35px 0;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--label);
+    font-family:'Source Sans 3',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-weight:300; font-size:17px; line-height:1.55;
+    font-feature-settings:"ss01"; -webkit-font-smoothing:antialiased;
+  }
+  code,.mono{font-family:'Source Code Pro',ui-monospace,Menlo,monospace}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative; overflow:hidden; padding:88px 0 72px;
+    background:
+      radial-gradient(900px 420px at 15% -10%, rgba(83,58,253,.14), transparent 60%),
+      radial-gradient(700px 380px at 95% 0%, rgba(249,107,238,.16), transparent 55%);
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500;
+    letter-spacing:.4px; text-transform:uppercase; color:var(--purple);
+    background:#fff; border:1px solid var(--purple-light); border-radius:6px;
+    padding:5px 12px; box-shadow:var(--shadow-amb);
+  }
+  h1{
+    font-size:clamp(34px,6vw,56px); font-weight:300; line-height:1.05;
+    letter-spacing:-1.4px; color:var(--navy); margin:22px 0 0;
+  }
+  h1 .grad{
+    background:linear-gradient(90deg,var(--purple),var(--magenta));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .lede{font-size:19px; color:var(--body); max-width:640px; margin:20px 0 0}
+  .hero-tags{margin-top:30px; display:flex; flex-wrap:wrap; gap:10px}
+  .tag{
+    font-size:13px; font-weight:400; color:var(--navy); background:#fff;
+    border:1px solid var(--border); border-radius:4px; padding:5px 11px;
+    box-shadow:rgba(23,23,23,.06) 0 3px 6px;
+  }
+  .tag b{color:var(--purple); font-weight:600}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:64px 0}
+  section + section{border-top:1px solid var(--border)}
+  .kicker{
+    font-family:'Source Code Pro',monospace; font-size:12px; font-weight:500;
+    letter-spacing:1.5px; text-transform:uppercase; color:var(--purple);
+  }
+  h2{
+    font-size:clamp(26px,3.4vw,34px); font-weight:300; letter-spacing:-.64px;
+    color:var(--navy); margin:10px 0 8px;
+  }
+  .sub{color:var(--body); max-width:660px; margin:0 0 34px; font-size:17px}
+
+  /* ---------- frise ---------- */
+  .frise{background:#fff; border:1px solid var(--border); border-radius:8px;
+    box-shadow:var(--shadow); padding:14px 10px; overflow-x:auto}
+  .frise svg{display:block; min-width:900px; width:100%; height:auto}
+
+  /* ---------- cartes étapes ---------- */
+  .steps{display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{
+    position:relative; background:#fff; border:1px solid var(--border);
+    border-radius:6px; padding:26px 24px 24px; box-shadow:var(--shadow-amb);
+    transition:box-shadow .25s ease, transform .25s ease;
+  }
+  .card:hover{transform:translateY(-3px); box-shadow:var(--shadow)}
+  .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:6px; font-weight:600; font-size:17px;
+    color:#fff; background:linear-gradient(135deg,var(--purple),var(--magenta));
+    margin-bottom:14px; font-feature-settings:"tnum";
+  }
+  .card h3{font-size:21px; font-weight:300; letter-spacing:-.22px; color:var(--navy); margin:0 0 8px}
+  .card p{margin:0; color:var(--body); font-size:15.5px}
+  .card .what{color:var(--label); font-weight:400}
+  .crit{
+    margin-top:14px; font-size:13px; color:var(--green-text);
+    background:rgba(21,190,83,.12); border:1px solid rgba(21,190,83,.35);
+    border-radius:4px; padding:6px 10px; display:inline-block;
+  }
+  .soleil{
+    position:absolute; top:-10px; right:14px; font-size:13px; font-weight:500;
+    color:var(--purple); background:var(--purple-soft); border:1px solid var(--purple-light);
+    border-radius:4px; padding:3px 9px;
+  }
+
+  /* ---------- diagramme décision ---------- */
+  .diagram{background:var(--brand-dark); border-radius:8px; padding:24px 10px;
+    box-shadow:var(--shadow); overflow-x:auto}
+  .diagram svg{display:block; min-width:820px; width:100%; height:auto}
+  .diagram-cap{color:rgba(255,255,255,.62); font-size:14px; text-align:center; margin:16px 20px 0}
+
+  /* ---------- garde-fous ---------- */
+  .guards{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .guard{
+    background:var(--bg-soft); border:1px solid var(--border); border-left:4px solid var(--ruby);
+    border-radius:0 6px 6px 0; padding:18px 20px;
+  }
+  .guard h4{margin:0 0 6px; font-size:16px; font-weight:500; color:var(--navy)}
+  .guard p{margin:0; font-size:14.5px; color:var(--body)}
+
+  /* ---------- pipeline (bande sombre) ---------- */
+  .pipeline{background:var(--brand-dark); border-radius:8px; padding:34px 26px; color:#fff;
+    box-shadow:var(--shadow)}
+  .pipeline .kicker{color:var(--magenta)}
+  .pipeline h2{color:#fff}
+  .flow-line{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:8px}
+  .chip{
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+    border-radius:6px; padding:9px 14px; font-size:14px;
+  }
+  .chip .mono{color:#ffd7ef; font-size:12.5px}
+  .arrow{color:var(--magenta); font-size:18px; font-weight:400}
+
+  footer{padding:44px 0 60px; border-top:1px solid var(--border); color:var(--body); font-size:14px}
+  footer .mono{color:var(--navy)}
+  @media (max-width:640px){ .hero{padding:60px 0 48px} section{padding:46px 0} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">● Workflow d'agent</span>
+    <h1>D'une vidéo YouTube<br>à une <span class="grad">page web à partager</span></h1>
+    <p class="lede">Sept étapes, un seul trajet : je récupère la vidéo, j'obtiens les mots, je résume, je construis la page, je la publie — et je vérifie le lien avant de te l'envoyer.</p>
+    <div class="hero-tags">
+      <span class="tag"><b>Source</b> sous-titres officiels</span>
+      <span class="tag">Sinon <b>transcription vocale locale</b></span>
+      <span class="tag"><b>Résumé</b> en 5 points</span>
+      <span class="tag">Lien <b>public vérifié</b></span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= FRISE ================= -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Le trajet en un coup d'œil</p>
+    <h2>De l'URL à l'adresse partageable</h2>
+    <p class="sub">Chaque étape produit une preuve. Si une preuve manque, on ne passe pas à la suivante.</p>
+    <div class="frise">
+      <svg viewBox="0 0 980 150" role="img" aria-label="Frise des 7 étapes">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#533afd"/><stop offset="1" stop-color="#f96bee"/>
+          </linearGradient>
+        </defs>
+        <line x1="60" y1="75" x2="920" y2="75" stroke="#e5edf5" stroke-width="4" stroke-linecap="round"/>
+        <line x1="60" y1="75" x2="920" y2="75" stroke="url(#g1)" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+        <g font-family="'Source Sans 3',sans-serif" text-anchor="middle">
+          <!-- 1 -->
+          <circle cx="60" cy="75" r="24" fill="#fff" stroke="#533afd" stroke-width="3"/>
+          <text x="60" y="81" font-size="18" fill="#533afd">🎬</text>
+          <text x="60" y="124" font-size="13" fill="#061b31" font-weight="500">Trouver</text>
+          <!-- 2 -->
+          <circle cx="203" cy="75" r="24" fill="#fff" stroke="#533afd" stroke-width="3"/>
+          <text x="203" y="81" font-size="18" fill="#533afd">🔎</text>
+          <text x="203" y="124" font-size="13" fill="#061b31" font-weight="500">Sous-titres</text>
+          <!-- 3 -->
+          <circle cx="346" cy="75" r="24" fill="#fff" stroke="#533afd" stroke-width="3"/>
+          <text x="346" y="81" font-size="18" fill="#533afd">🎧</text>
+          <text x="346" y="124" font-size="13" fill="#061b31" font-weight="500">Transcrire</text>
+          <!-- 4 -->
+          <circle cx="489" cy="75" r="24" fill="#fff" stroke="#533afd" stroke-width="3"/>
+          <text x="489" y="81" font-size="18" fill="#533afd">✍️</text>
+          <text x="489" y="124" font-size="13" fill="#061b31" font-weight="500">Résumer</text>
+          <!-- 5 -->
+          <circle cx="632" cy="75" r="24" fill="#fff" stroke="#533afd" stroke-width="3"/>
+          <text x="632" y="81" font-size="18" fill="#533afd">🧩</text>
+          <text x="632" y="124" font-size="13" fill="#061b31" font-weight="500">Construire</text>
+          <!-- 6 -->
+          <circle cx="775" cy="75" r="24" fill="#fff" stroke="#533afd" stroke-width="3"/>
+          <text x="775" y="81" font-size="18" fill="#533afd">🚀</text>
+          <text x="775" y="124" font-size="13" fill="#061b31" font-weight="500">Publier</text>
+          <!-- 7 -->
+          <circle cx="920" cy="75" r="24" fill="url(#g1)"/>
+          <text x="920" y="81" font-size="18" fill="#fff">✅</text>
+          <text x="920" y="124" font-size="13" fill="#061b31" font-weight="500">Vérifier</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÉTAPES ================= -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Les sept étapes</p>
+    <h2>Ce qui se passe, dans l'ordre</h2>
+    <p class="sub">Chaque carte tient en une idée : l'action, puis la preuve qui autorise à continuer.</p>
+    <div class="steps">
+
+      <div class="card">
+        <span class="num">1</span>
+        <h3>Trouver la vidéo</h3>
+        <p class="what">J'identifie la chaîne, puis je lis son flux RSS pour prendre la <b>vidéo la plus récente</b> — un titre, une date convertie à ton fuseau.</p>
+        <span class="crit">✓ videoId + titre + date retenus</span>
+      </div>
+
+      <div class="card">
+        <span class="num">2</span>
+        <h3>Chercher les mots</h3>
+        <p class="what">Je demande les <b>sous-titres</b> de la vidéo. S'ils existent, le transcript est là en quelques secondes.</p>
+        <span class="crit">✓ transcript non vide</span>
+      </div>
+
+      <div class="card">
+        <span class="soleil">seulement si besoin</span>
+        <span class="num">3</span>
+        <h3>Écouter, si muet</h3>
+        <p class="what">Pas de sous-titres ? Je télécharge l'audio, je le convertis en <b>16 kHz mono</b>, puis je le transcris <b>localement</b> (Whisper).</p>
+        <span class="crit">✓ transcript couvre la durée réelle</span>
+      </div>
+
+      <div class="card">
+        <span class="num">4</span>
+        <h3>Résumer en 5 points</h3>
+        <p class="what">Je lis le transcript et j'écris <b>exactement 5 points</b> — chacun un titre court et 2-3 phrases factuelles. Les chiffres restent tels quels.</p>
+        <span class="crit">✓ 5 points auto-suffisants</span>
+      </div>
+
+      <div class="card">
+        <span class="num">5</span>
+        <h3>Construire la page</h3>
+        <p class="what">Un petit fichier de description, un gabarit : il en sort une page <b>HTML autonome</b> — un seul fichier, sans dépendance.</p>
+        <span class="crit">✓ titre + 5 points + balises de partage</span>
+      </div>
+
+      <div class="card">
+        <span class="num">6</span>
+        <h3>Publier</h3>
+        <p class="what">La page part sur un hébergement statique public. Un simple <span class="mono">git push</span> + activation, et une <b>adresse publique</b> apparaît.</p>
+        <span class="crit">✓ URL renvoyée par l'hébergeur</span>
+      </div>
+
+      <div class="card">
+        <span class="num">7</span>
+        <h3>Vérifier le lien</h3>
+        <p class="what">J'ouvre l'adresse pour de vrai : code <span class="mono">200</span>, bon titre, page qui s'affiche sans texte coupé. <b>Jamais d'annonce sans ce contrôle.</b></p>
+        <span class="crit">✓ 200 + rendu conforme</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= DIAGRAMME DÉCISION ================= -->
+<section>
+  <div class="wrap">
+    <p class="kicker">L'embranchement clé</p>
+    <h2>Et s'il n'y a pas de sous-titres ?</h2>
+    <p class="sub">Ce n'est pas une panne : c'est le chemin normal d'une vidéo sans sous-titres. On bascule sur l'écoute.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 820 330" role="img" aria-label="Diagramme de décision sous-titres">
+        <defs>
+          <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#b9b9f9"/>
+          </marker>
+          <marker id="arG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#15be53"/>
+          </marker>
+        </defs>
+        <g font-family="'Source Sans 3',sans-serif">
+          <!-- départ -->
+          <rect x="300" y="18" width="220" height="52" rx="6" fill="rgba(255,255,255,.08)" stroke="#b9b9f9" stroke-width="1.5"/>
+          <text x="410" y="50" text-anchor="middle" fill="#fff" font-size="16">Vidéo à résumer</text>
+
+          <line x1="410" y1="70" x2="410" y2="104" stroke="#b9b9f9" stroke-width="2" marker-end="url(#ar)"/>
+
+          <!-- losange -->
+          <polygon points="410,110 560,168 410,226 260,168" fill="rgba(83,58,253,.30)" stroke="#f96bee" stroke-width="2"/>
+          <text x="410" y="163" text-anchor="middle" fill="#fff" font-size="15" font-weight="500">Des sous-titres ?</text>
+          <text x="410" y="185" text-anchor="middle" fill="rgba(255,255,255,.65)" font-size="12">sous-titres ou auto-générés</text>
+
+          <!-- OUI à droite -->
+          <line x1="560" y1="168" x2="640" y2="168" stroke="#15be53" stroke-width="2" marker-end="url(#arG)"/>
+          <text x="600" y="158" text-anchor="middle" fill="#15be53" font-size="13" font-weight="600">OUI</text>
+          <rect x="640" y="136" width="150" height="64" rx="6" fill="rgba(21,190,83,.18)" stroke="rgba(21,190,83,.5)" stroke-width="1.5"/>
+          <text x="715" y="163" text-anchor="middle" fill="#fff" font-size="14">Transcript</text>
+          <text x="715" y="182" text-anchor="middle" fill="#fff" font-size="14">immédiat</text>
+
+          <!-- NON vers le bas -->
+          <line x1="410" y1="226" x2="410" y2="262" stroke="#b9b9f9" stroke-width="2" marker-end="url(#ar)"/>
+          <text x="426" y="248" fill="#f96bee" font-size="13" font-weight="600">NON</text>
+
+          <rect x="210" y="262" width="400" height="52" rx="6" fill="rgba(234,34,97,.16)" stroke="rgba(234,34,97,.55)" stroke-width="1.5"/>
+          <text x="410" y="282" text-anchor="middle" fill="#fff" font-size="13.5">🎧 Télécharger l'audio → 16 kHz mono</text>
+          <text x="410" y="302" text-anchor="middle" fill="#fff" font-size="13.5">→ Transcription vocale locale (Whisper)</text>
+        </g>
+      </svg>
+      <p class="diagram-cap">Dans les deux cas, on repart avec le même objet : un transcript de texte exploitable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GARDE-FOUS ================= -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Les garde-fous</p>
+    <h2>Ce qui pourrait mal tourner (et comment je le gère)</h2>
+    <p class="sub">Un workflow ne vaut que par ses pièges anticipés.</p>
+    <div class="guards">
+
+      <div class="guard">
+        <h4>Le réseau qui bloque les médias</h4>
+        <p>La page YouTube s'ouvre mais tout téléchargement échoue ? Je force la résolution DNS des hôtes vidéo via un service chiffré, sans droits admin.</p>
+      </div>
+
+      <div class="guard">
+        <h4>Vidéo sans sous-titres</h4>
+        <p>C'est normal, pas un bug. Je bascule sur l'écoute au lieu de réessayer d'autres sources de sous-titres.</p>
+      </div>
+
+      <div class="guard">
+        <h4>Transcription : noms et chiffres</h4>
+        <p>Une transcription vocale peut se tromper sur un nom propre. J'affiche alors une réserve de méthode, jamais une certitude inventée.</p>
+      </div>
+
+      <div class="guard">
+        <h4>Lien qui n'existe pas encore</h4>
+        <p>Un hébergement public met jusqu'à une minute à répondre. Un premier 404 est banal : je boucle jusqu'à obtenir 200 avant d'annoncer quoi que ce soit.</p>
+      </div>
+
+      <div class="guard">
+        <h4>Partage sans image</h4>
+        <p>J'associe toujours l'image de la vidéo à la page, sinon l'aperçu du lien sort nu dans une conversation.</p>
+      </div>
+
+      <div class="guard">
+        <h4>Contenu public</h4>
+        <p>La page est publique : je vérifie qu'aucune donnée privée n'y figure. Pour de l'actualité, c'est sans risque.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIPELINE SOMBRE ================= -->
+<section>
+  <div class="wrap">
+    <div class="pipeline">
+      <p class="kicker">Sous le capot</p>
+      <h2>La chaîne d'outils</h2>
+      <div class="flow-line">
+        <span class="chip"><span class="mono">yt-dlp</span> · vidéo</span>
+        <span class="arrow">→</span>
+        <span class="chip"><span class="mono">sous-titres</span> · mots</span>
+        <span class="arrow">→</span>
+        <span class="chip"><span class="mono">ffmpeg</span> · 16 kHz</span>
+        <span class="arrow">→</span>
+        <span class="chip"><span class="mono">whisper</span> · texte</span>
+        <span class="arrow">→</span>
+        <span class="chip"><span class="mono">gabarit</span> · page</span>
+        <span class="arrow">→</span>
+        <span class="chip"><span class="mono">git push</span> · publiable</span>
+        <span class="arrow">→</span>
+        <span class="chip" style="border-color:rgba(249,107,238,.6)"><span class="mono">HTTP 200</span> · vérifié</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Workflow de résumé vidéo → page web · résumé en <span class="mono">5</span> points, lien public vérifié.</p>
+    <p style="margin-top:6px">Chaque étape a sa preuve : si la preuve manque, l'étape n'est pas terminée.</p>
+  </div>
+</footer>
+
+</body>
+</html>
